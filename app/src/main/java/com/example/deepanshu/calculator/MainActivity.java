@@ -2,6 +2,7 @@ package com.example.deepanshu.calculator;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     TextView inputData;
 
+    float screenSize;
+    float buttonTextSize;
     float input1;
     float input2;
     boolean ifViewed = false;
@@ -73,7 +76,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        screenSize = getScreenSize();
+        buttonTextSize = buttonFontSize();
+
         inputData = (TextView) findViewById(R.id.input);
+        inputData.setTextSize((float) ((30/3.7)*screenSize));
 
         Button clrs = (Button) findViewById(R.id.clear);
         clrs.setOnClickListener(new View.OnClickListener() {
@@ -82,36 +89,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 inputData.setText("0");
             }
         });
+        clrs.setTextSize(buttonTextSize);
 
         num0 = (Button) findViewById(R.id.number0);
         num0.setOnClickListener(this);
+        num0.setTextSize(buttonTextSize);
+
 
         num1 = (Button) findViewById(R.id.number1);
         num1.setOnClickListener(this);
+        num1.setTextSize(buttonTextSize);
 
         num2 = (Button) findViewById(R.id.number2);
         num2.setOnClickListener(this);
+        num2.setTextSize(buttonTextSize);
 
         num3 = (Button) findViewById(R.id.number3);
         num3.setOnClickListener(this);
+        num3.setTextSize(buttonTextSize);
 
         num4 = (Button) findViewById(R.id.number4);
         num4.setOnClickListener(this);
+        num4.setTextSize(buttonTextSize);
 
         num5 = (Button) findViewById(R.id.number5);
         num5.setOnClickListener(this);
+        num5.setTextSize(buttonTextSize);
 
         num6 = (Button) findViewById(R.id.number6);
         num6.setOnClickListener(this);
+        num6.setTextSize(buttonTextSize);
 
         num7 = (Button) findViewById(R.id.number7);
         num7.setOnClickListener(this);
+        num7.setTextSize(buttonTextSize);
 
         num8 = (Button) findViewById(R.id.number8);
         num8.setOnClickListener(this);
+        num8.setTextSize(buttonTextSize);
 
         num9 = (Button) findViewById(R.id.number9);
         num9.setOnClickListener(this);
+        num9.setTextSize(buttonTextSize);
 
         Button decimal = (Button) findViewById(R.id.point);
         decimal.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 inputData.setText(inputData.getText().toString()+ ".");
             }
         });
+        decimal.setTextSize(buttonTextSize);
 
         Button negate = (Button) findViewById(R.id.negation);
         negate.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 inputData.setText(toNegate+" ");
             }
         });
+        negate.setTextSize(buttonTextSize);
 
         Button percent = (Button) findViewById(R.id.by100);
         percent.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 inputData.setText(toPercent + "");
             }
         });
+        percent.setTextSize(buttonTextSize);
 
         div = (Button) findViewById(R.id.divide);
         div.setOnClickListener(new View.OnClickListener() {
@@ -161,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ifDiv = true;
             }
         });
+        div.setTextSize(buttonTextSize);
 
         mul = (Button) findViewById(R.id.multiply);
         mul.setOnClickListener(new View.OnClickListener() {
@@ -171,6 +194,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ifMul = true;
             }
         });
+        mul.setTextSize(buttonTextSize);
 
         add = (Button) findViewById(R.id.addition);
         add.setOnClickListener(new View.OnClickListener() {
@@ -181,6 +205,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ifAdd = true;
             }
         });
+        add.setTextSize(buttonTextSize);
 
         sub = (Button) findViewById(R.id.subtract);
         sub.setOnClickListener(new View.OnClickListener() {
@@ -191,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ifSub = true;
             }
         });
+        sub.setTextSize(buttonTextSize);
 
         equ = (Button) findViewById(R.id.equals);
         equ.setOnClickListener(new View.OnClickListener() {
@@ -201,6 +227,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ifViewed = true;
             }
         });
+        equ.setTextSize(buttonTextSize);
     }
 
     @Override
@@ -238,5 +265,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             inputData.setText(inputData.getText().toString()+currentNum);
         }
 
+    }
+
+    private float buttonFontSize() {
+        return (float) ((9/3.7)*getScreenSize());
+    }
+
+    public float getScreenSize(){
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        float height = displayMetrics.heightPixels/displayMetrics.ydpi;
+        float width = displayMetrics.widthPixels/displayMetrics.xdpi;
+        float size = (float) Math.sqrt((height*height) + (width*width));
+
+        return size;
     }
 }
